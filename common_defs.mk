@@ -96,9 +96,9 @@ PPCOMMAND = -pp "cppo -D \"$(strip $(PP_DEFINE))\""
 
 DEPCOMMAND = $(OCAMLFIND) $(OCAMLDEP) $(PPCOMMAND) $(INCLUDE_DIRS)
 
-OCAMLOPT_CMD = $(OCAMLOPT) $(PPCOMMAND) -thread
+OCAMLOPT_CMD = $(OCAMLOPT) $(PPCOMMAND) -thread -annot -bin-annot
 
-OCAMLC_CMD = $(OCAMLC) $(PPCOMMAND) -thread
+OCAMLC_CMD = $(OCAMLC) $(PPCOMMAND) -thread -annot -bin-annot
 
 
 # Suffixes

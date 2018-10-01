@@ -24,7 +24,7 @@ let create = function
                                s (stbi_load_error()) 
       in raise (Image_error msg)
     |Some (s,x,y) -> begin
-      {width = x; height = y; data = s}
+      {width = x; height = y; data = Bytes.of_string s}
     end
   end
   |`Empty ({Vector2i.x = width; y = height}, color) ->
@@ -82,12 +82,13 @@ let set img v c =
 
 let get img v =
   let open Vector2i in
+  let ( .%[] ) = Bytes.get in
   try 
     Color.RGB.(
-    {r = inverse img.data.[v.y * 4 * img.width + v.x * 4 + 0];
-     g = inverse img.data.[v.y * 4 * img.width + v.x * 4 + 1];
-     b = inverse img.data.[v.y * 4 * img.width + v.x * 4 + 2];
-     a = inverse img.data.[v.y * 4 * img.width + v.x * 4 + 3]})
+    {r = inverse (img.data.%[v.y * 4 * img.width + v.x * 4 + 0]);
+     g = inverse (img.data.%[v.y * 4 * img.width + v.x * 4 + 1]);
+     b = inverse (img.data.%[v.y * 4 * img.width + v.x * 4 + 2]);
+     a = inverse (img.data.%[v.y * 4 * img.width + v.x * 4 + 3])})
   with
     Invalid_argument _ -> raise (Image_error "Get : index out of bounds")
 

@@ -135,13 +135,14 @@ module Internal = struct
     = "caml_stb_render_bitmap"
 
   let convert_1chan_bitmap bmp =
+    let ( .%[] ) = Bytes.get in
     let s = Bytes.length bmp in
     let bts = Bytes.make (s * 4) '\000' in
     for i = 0 to s - 1 do
       Bytes.set bts (4*i+0) '\255';
       Bytes.set bts (4*i+1) '\255';
       Bytes.set bts (4*i+2) '\255';
-      Bytes.set bts (4*i+3) bmp.[i]
+      Bytes.set bts (4*i+3) bmp.%[i]
     done;
     bts
 

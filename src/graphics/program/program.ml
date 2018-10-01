@@ -23,7 +23,7 @@ let read_file filename =
 
 
 let to_source = function
-  | `File   s -> read_file s
+  | `File   s -> Bytes.to_string (read_file s)
   | `String s -> s
 
 
